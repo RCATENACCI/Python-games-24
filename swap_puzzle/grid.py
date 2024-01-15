@@ -57,8 +57,17 @@ class Grid():
         """
         Checks is the current state of the grid is sorte and returns the answer as a boolean.
         """
+        for i in range (1,self.m - 1) :
+            for j in range (0,self.n - 1):
+                if self.state[i][j] > self.state[i][j+1]:
+                    return False
+                if self.state[i][-1] > self.state[i+1][0] :
+                    return False
+                if self.state[-1][j] > self.state[-1][j+1] :
+                    return False
+        return True
         # TODO: implement this function (and remove the line "raise NotImplementedError").
-        raise NotImplementedError
+    
 
     def swap(self, cell1, cell2):
         """
@@ -69,8 +78,17 @@ class Grid():
         cell1, cell2: tuple[int]
             The two cells to swap. They must be in the format (i, j) where i is the line and j the column number of the cell. 
         """
+        if abs(cell2[0]-cell1[0]) + abs(cell2[1]-cell1[1]) > 1 :
+            raise ValueError("cell too far")
+        mat = self.state 
+        t = mat[cell1[0]][cell1[1]]
+        r = mat[cell2[0]][cell2[1]]
+        mat[cell1[0]][cell1[1]]=r
+        mat[cell2[0]][cell2[1]]=t
+        self.state = mat
+
         # TODO: implement this function (and remove the line "raise NotImplementedError").
-        raise NotImplementedError
+        
 
     def swap_seq(self, cell_pair_list):
         """
@@ -82,8 +100,11 @@ class Grid():
             List of swaps, each swap being a tuple of two cells (each cell being a tuple of integers). 
             So the format should be [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')), ...].
         """
+        for i in cell_pair_list :
+            self.swap(i[0],i[1])
+
         # TODO: implement this function (and remove the line "raise NotImplementedError").
-        raise NotImplementedError
+        
 
     @classmethod
     def grid_from_file(cls, file_name): 
@@ -113,4 +134,4 @@ class Grid():
             grid = Grid(m, n, initial_state)
         return grid
 
-rr
+
